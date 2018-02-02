@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.nowgo.dao.ScoreDao">
+    <insert id="addScore" parameterType="Double">
+        insert into score(point) values(#{point})
+    </insert>
+</mapper>

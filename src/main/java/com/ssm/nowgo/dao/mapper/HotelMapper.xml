@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.nowgo.dao.HotleDao">
+    <resultMap id="HotelMap" type="Hotel">
+        <id property="id" column="id"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="place" column="place"/>
+        <result property="price" column="price"/>
+        <result property="name" column="name"/>
+        <result property="locate" column="weiyu"/>
+    </resultMap>
+
+   <select id="getHotelList" resultMap="HotelMap" parameterType="String">
+       select id,img_url,place,name,weiyu,price from hotel
+       where place=#{palce}
+   </select>
+
+    <select id="getGroomList" resultMap="HotelMap" parameterType="String">
+        select img_url,place from hotel
+        where type_Id =(select id from type where name=#{name})
+    </select>
+
+
+
+</mapper>

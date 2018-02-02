@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.nowgo.dao.TicklingDao">
+    <insert id="addTickling" parameterType="Tickling" keyProperty="id" useGeneratedKeys="true">
+        insert into tickling(text1,qq,wechat,phone) values(#{text},#{qq},#{wechat},#{phone})
+    </insert>
+</mapper>

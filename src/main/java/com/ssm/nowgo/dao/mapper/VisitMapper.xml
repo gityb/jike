@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.nowgo.dao.VisitDao">
+    <insert id="addVisit" parameterType="Visit" keyProperty="id" useGeneratedKeys="true">
+        insert into visit(title,content,IMGURL,PLACE,NICKNAME,USER_ID,created_date,HEAD_IMG)
+        values(#{title},#{content},#{imgUrl},#{place},#{nickname},#{userId},now(),#{userImg})
+    </insert>
+
+    <resultMap id="visitMap" type="Visit" >
+        <id column="ID" property="id"/>
+        <result column="IMGURL" property="imgUrl"/>
+        <result column="PLACE" property="place"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="title" property="title"/>
+        <result column="HEAD_IMG" property="userImg"/>
+        <result column="NICKNAME" property="nickname"/>
+        <result column="CONTENT" property="content"/>
+        <result column="TYPE_ID" property="typeId"/>
+        <result column="VIEW_COUNT" property="browseNum"/>
+        <result column="created_date" property="createdDate"/>
+        <result column="PLACE_ID" property="placeId"/>
+        <result column="REPLY_COUNT" property="reply"/>
+    </resultMap>
+    <select id="getVisitCount" resultType="int" parameterType="String">
+        select count(id) from visit where place=#{place}
+    </select>
+
+    <select id="getVisitList" resultMap="visitMap" parameterType="String">
+     select ID,IMGURL,PLACE,title,HEAD_IMG,NICKNAME,VIEW_COUNT,created_date,REPLY_COUNT from visit where type_id=(select id from type where name=#{name})
+    </select>
+    <select id="getVisit" resultMap="visitMap" >
+        select id,imgurl,place,nickname,head_img,view_count,created_date,title,REPLY_COUNT from visit
+    </select>
+
+    <select id="getVisitByPlace" resultMap="visitMap" >
+        select ID,IMGURL,PLACE,title,HEAD_IMG,NICKNAME,VIEW_COUNT,created_date,REPLY_COUNT from visit
+        where PLACE = #{place}
+    </select>
+    <select id="getVisitById" parameterType="int" resultMap="visitMap" >
+        select * from visit where id=#{id}
+    </select>
+    <select id="getStrategyBySearch" parameterType="String" resultMap="visitMap">
+        select id,title from visit
+          where title like concat('%',#{title},'%')
+    </select>
+    <select id="getVisitByUserId" parameterType="int" resultMap="visitMap">
+        select title,created_date,content from visit where user_id=#{userId}
+    </select>
+</mapper>

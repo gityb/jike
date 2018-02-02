@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.nowgo.dao.PlaceDao">
+    <resultMap id="PlaceMap" type="Place">
+        <id property="id" column="ID"/>
+        <result property="city" column="CITY"/>
+        <result property="visiterNum" column="COUNT"/>
+        <result property="imgUrl" column="PLACE_IMG"/>
+    </resultMap>
+
+    <select id="getPlaceByCount" resultMap="PlaceMap" >
+        select * from place
+    </select>
+
+    <select id="getPlaceByCount1" resultMap="PlaceMap" >
+        select * from place
+    </select>
+    <select id="getPlace" resultMap="PlaceMap" parameterType="String">
+        select * from place where city = #{city}
+    </select>
+</mapper>

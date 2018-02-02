@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.nowgo.dao.LoginDao">
+    <resultMap id="userMap" type="User">
+        <id property="id" column="id"/>
+        <result property="phone" column="phone"/>
+        <result property="code" column="code"/>
+        <result property="nickname" column="nickname"/>
+        <result property="pwd" column="password"/>
+        <result property="headImg" column="head_img"/>
+        <result property="email" column="email"/>
+        <result property="status" column="status"/>
+        <result property="attentionNum" column="attention_num"/>
+        <result property="fansNum" column="fans_num"/>
+        <result property="birth" column="birth"/>
+        <result property="desc" column="text"/>
+        <result property="sex" column="sex"/>
+    </resultMap>
+    <insert id="addUser" parameterType="User" keyProperty="id" useGeneratedKeys="true">
+        insert into username(phone,code) values(#{phone},#{code})
+    </insert>
+    <update id="updateUser" parameterType="User">
+        update username set nickname=#{nickname},password=#{pwd},email=#{email},code=#{code},created_date=now() where phone=#{phone}
+    </update>
+    <update id="updateCode" parameterType="User">
+        update username set code=#{code} where phone=#{phone}
+    </update>
+    <select id="getUserById" parameterType="int" resultMap="userMap">
+        select head_img,fans_num,attention_num,birth,nickname,text,sex from username where id=#{id}
+    </select>
+    <select id="getUserByPhone" parameterType="String" resultMap="userMap">
+        select * from username where phone=#{phone}
+    </select>
+    <select id="getUserByUser" parameterType="User" resultType="User">
+        select * from username where
+        phone=#{phone}
+        <if test="code!=null and code!=''">and code=#{code}</if>
+        <if test="pwd!=null and pwd!=''">and password=#{pwd}</if>
+    </select>
+    <select id="getUser" parameterType="String" resultType="int">
+        select count(id) from username where phone=#{phone}
+    </select>
+    <update id="updateUserInfo" parameterType="User">
+        update username set nickname=#{nickname},sex=#{sex},text=#{desc},birth=#{birth},head_img=#{headImg}
+        where id=#{id}
+    </update>
+
+    <insert id="addLoginLog" parameterType="Map">
+        insert into login_log(USER_ID,CITY,CREATED_DATE,PROVINCE,IP)
+        values(#{userId},#{city},now(),#{province},#{ip})
+    </insert>
+
+
+</mapper>
